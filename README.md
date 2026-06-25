@@ -18,7 +18,7 @@
 - 🎯 **Analog gauge** with three verdict zones (🔴 Don't Do It / 🟡 Think Twice / 🟢 Do It)
 - 📱 **Mobile-first responsive design** with swipe gestures 👈👉 between tabs
 - 🌙 **Dark/Light theme** toggle
-- 💾 **Persistent local storage** — your decisions survive page reloads
+- 💾 **Persistent local storage** — with 📥 import and 📤 export features
 - 📜 **Decision history** with quick-select and verdict badges
 - ❓ **Stylized question‑mark logo** representing life's big choices
 
