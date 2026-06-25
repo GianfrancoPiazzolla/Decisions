@@ -1,4 +1,4 @@
-# 🤔 Decisions — Schulich Decision Method
+# 🤔 ?ecisions — Schulich Decision Method
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue?style=flat-square)
 ![PWA](https://img.shields.io/badge/PWA-ready-brightgreen?style=flat-square)
