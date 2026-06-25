@@ -11,7 +11,7 @@
   <title>?ecisions</title>
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <link rel="manifest" href="manifest.json">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js">
   </script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap');
@@ -1243,6 +1243,23 @@
         gap: 12px
       }
     }
+    .settings-section { margin-bottom: 20px; }
+    .settings-section-title { font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 10px; }
+    .export-textarea { width: 100%; height: 200px; resize: none; background: var(--bg-primary); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); color: var(--text-secondary); font-family: var(--font-mono); font-size: 11px; padding: 10px; line-height: 1.5; outline: none; margin-bottom: 10px; -webkit-user-select: text; user-select: text; }
+    .export-textarea:focus { border-color: var(--border-active); }
+    .export-filename { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-muted); margin-bottom: 10px; word-break: break-all; }
+    .import-choice-wrap { display: flex; flex-direction: column; gap: 10px; margin: 12px 0; }
+    .import-choice-btn { background: var(--bg-tertiary); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 14px; text-align: left; cursor: pointer; transition: all 150ms; }
+    .import-choice-btn:hover { border-color: var(--border-active); }
+    .import-choice-btn.danger-choice { border-color: rgba(239,68,68,0.3); }
+    .import-choice-btn.danger-choice:hover { background: rgba(239,68,68,0.08); }
+    .import-choice-title { font-weight: 700; font-size: var(--text-sm); margin-bottom: 3px; color: var(--text-primary); }
+    .import-choice-desc { font-size: var(--text-xs); color: var(--text-muted); }
+    .confirm-inline { background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.25); border-radius: var(--radius-md); padding: 10px 12px; font-size: var(--text-sm); color: var(--danger); margin: 8px 0; display: flex; align-items: center; gap: 10px; }
+    .confirm-inline .cta-btns { display: flex; gap: 8px; margin-left: auto; }
+    .confirm-inline button { padding: 5px 12px; border-radius: 6px; border: none; cursor: pointer; font-size: var(--text-xs); font-weight: 700; font-family: var(--font-body); }
+    .confirm-yes { background: var(--danger); color: #fff; }
+    .confirm-no { background: var(--bg-tertiary); color: var(--text-secondary); }
   </style>
 </head>
 
@@ -1268,6 +1285,9 @@
       <span class="header-sub">Schulich Method</span>
     </div>
     <div class="header-actions">
+      <button class="icon-btn ripple-host" id="btn-settings" aria-label="Settings" onclick="openSettings()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </button>
       <button class="icon-btn ripple-host" id="btn-theme" aria-label="Toggle theme" onclick="toggleTheme()">
         <svg id="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
           stroke-linecap="round" stroke-linejoin="round" style="display:none">
@@ -1402,6 +1422,61 @@
         style="display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:13px;border-radius:var(--radius-md);border:none;font-family:var(--font-body);font-size:var(--text-base);font-weight:600;cursor:pointer;background:var(--neg-bg);color:var(--neg-color);border:1px solid rgba(239,68,68,0.25);margin-bottom:8px">Delete</button>
       <button class="btn btn-secondary ripple-host" onclick="closeDeleteModal()"
         style="display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:13px;border-radius:var(--radius-md);font-family:var(--font-body);font-size:var(--text-base);font-weight:600;cursor:pointer;background:var(--bg-tertiary);color:var(--text-secondary);border:1px solid var(--border-subtle)">Cancel</button>
+    </div>
+  </div>
+  <!-- MODAL: SETTINGS -->
+  <div class="modal-overlay" id="modal-settings" role="dialog" aria-modal="true" aria-label="Settings">
+    <div class="modal-dialog">
+      <div class="modal-title" style="font-family:var(--font-display);font-size:var(--text-xl);font-weight:700;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:16px;color:var(--text-primary)">Settings</div>
+      <div class="settings-section">
+        <div class="settings-section-title">Data Management</div>
+        <button class="btn btn-secondary ripple-host" onclick="exportRecords()" aria-label="Export all decisions" style="width:100%;margin-bottom:8px">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Export All Decisions (JSON)
+        </button>
+        <button class="btn btn-secondary ripple-host" onclick="triggerImport()" aria-label="Import decisions from file" style="width:100%;margin-bottom:8px">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Import Decisions from File (JSON)
+        </button>
+        <input type="file" id="import-file-input" accept=".json" style="display:none" onchange="handleImportFile(event)">
+        <button class="btn btn-danger ripple-host" onclick="showDeleteAllConfirm()" aria-label="Delete all decisions" id="btn-delete-all-decisions" style="width:100%">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+          Delete All Decisions
+        </button>
+        <div id="delete-all-confirm-wrap"></div>
+      </div>
+      <button class="btn btn-secondary ripple-host" onclick="document.getElementById('modal-settings').classList.remove('open')" style="width:100%">Close</button>
+    </div>
+  </div>
+  <!-- MODAL: EXPORT -->
+  <div class="modal-overlay" id="modal-export" role="dialog" aria-modal="true" aria-label="Export data">
+    <div class="modal-dialog">
+      <div class="modal-title" style="font-family:var(--font-display);font-size:var(--text-xl);font-weight:700;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:16px;color:var(--text-primary)">Export Decisions</div>
+      <div class="export-filename" id="export-filename"></div>
+      <textarea class="export-textarea" id="export-textarea" readonly></textarea>
+      <button class="btn btn-primary ripple-host" onclick="copyExportToClipboard()" style="width:100%;margin-bottom:8px">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copy to Clipboard
+      </button>
+      <button class="btn btn-secondary ripple-host" onclick="document.getElementById('modal-export').classList.remove('open')" style="width:100%">Close</button>
+    </div>
+  </div>
+  <!-- MODAL: IMPORT CHOICE -->
+  <div class="modal-overlay" id="modal-import-choice" role="dialog" aria-modal="true" aria-label="Import options">
+    <div class="modal-dialog">
+      <div class="modal-title" style="font-family:var(--font-display);font-size:var(--text-xl);font-weight:700;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:16px;color:var(--text-primary)">Import Decisions</div>
+      <p style="font-size:var(--text-sm);color:var(--text-secondary);margin-bottom:12px">Choose how to import <strong id="import-count-label">0</strong> decisions:</p>
+      <div class="import-choice-wrap">
+        <button class="import-choice-btn danger-choice ripple-host" onclick="doImport('overwrite')" aria-label="Overwrite all decisions">
+          <div class="import-choice-title" style="color:var(--danger)">Overwrite All</div>
+          <div class="import-choice-desc">Replace all existing decisions. This cannot be undone.</div>
+        </button>
+        <button class="import-choice-btn ripple-host" onclick="doImport('merge')" aria-label="Merge decisions">
+          <div class="import-choice-title" style="color:var(--success)">Merge</div>
+          <div class="import-choice-desc">Add imported decisions, skipping duplicates by ID.</div>
+        </button>
+      </div>
+      <button class="btn btn-secondary ripple-host" onclick="document.getElementById('modal-import-choice').classList.remove('open')" style="width:100%">Cancel</button>
     </div>
   </div>
   <div id="toast-container" aria-live="polite"></div>
@@ -1910,6 +1985,132 @@
         }
       }
       window.updateFab = updateFab;
+
+      let pendingImport = null;
+
+      function openSettings() {
+        document.getElementById('modal-settings').classList.add('open');
+      }
+      window.openSettings = openSettings;
+
+      function exportRecords() {
+        const date = new Date().toISOString().split('T')[0];
+        const data = { exportedAt: new Date().toISOString(), decisions: state.decisions };
+        const jsonStr = JSON.stringify(data, null, 2);
+        const filename = 'decisions_export_' + date + '.json';
+        try {
+          const blob = new Blob([jsonStr], { type: 'application/json' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url; a.download = filename;
+          document.body.appendChild(a); a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+          showToast('Export complete', 'success');
+          return;
+        } catch(e) {}
+        showExportModal(jsonStr, filename);
+      }
+      window.exportRecords = exportRecords;
+
+      function showExportModal(jsonStr, filename) {
+        document.getElementById('export-filename').textContent = filename;
+        document.getElementById('export-textarea').value = jsonStr;
+        document.getElementById('modal-settings').classList.remove('open');
+        setTimeout(function() { document.getElementById('modal-export').classList.add('open'); }, 250);
+      }
+
+      function copyExportToClipboard() {
+        const ta = document.getElementById('export-textarea');
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(ta.value).then(function() {
+            showToast('Copied to clipboard', 'success');
+          }).catch(function() {
+            ta.select(); document.execCommand('copy');
+            showToast('Copied to clipboard', 'success');
+          });
+        } else {
+          ta.select(); document.execCommand('copy');
+          showToast('Copied to clipboard', 'success');
+        }
+      }
+      window.copyExportToClipboard = copyExportToClipboard;
+
+      function triggerImport() { document.getElementById('import-file-input').click(); }
+      window.triggerImport = triggerImport;
+
+      function handleImportFile(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          try {
+            const data = JSON.parse(ev.target.result);
+            let decisions = data.decisions;
+            if (!Array.isArray(decisions)) throw new Error('Invalid format');
+            const valid = decisions.filter(d => d.id && d.title);
+            if (!valid.length) throw new Error('No valid decisions found');
+            pendingImport = valid;
+            document.getElementById('import-count-label').textContent = valid.length;
+            document.getElementById('modal-settings').classList.remove('open');
+            setTimeout(() => document.getElementById('modal-import-choice').classList.add('open'), 250);
+          } catch(err) {
+            showToast('Import failed: ' + err.message, 'error');
+          }
+          e.target.value = '';
+        };
+        reader.readAsText(file);
+      }
+      window.handleImportFile = handleImportFile;
+
+      function doImport(mode) {
+        if (!pendingImport || !pendingImport.length) return;
+        if (mode === 'overwrite') {
+          state.decisions = pendingImport.map(d => ({ ...d }));
+          showToast('Imported ' + pendingImport.length + ' decisions (overwrite)', 'success');
+        } else {
+          const existing = new Set(state.decisions.map(d => d.id));
+          const newDecisions = pendingImport.filter(d => !existing.has(d.id));
+          state.decisions = [...state.decisions, ...newDecisions];
+          showToast('Merged ' + newDecisions.length + ' new decisions', 'success');
+        }
+        pendingImport = null;
+        if (!state.activeId && state.decisions.length > 0) {
+          state.activeId = state.decisions[state.decisions.length - 1].id;
+        }
+        saveState();
+        document.getElementById('modal-import-choice').classList.remove('open');
+        if (activeTab === 'active') {
+          renderActive();
+          if (state.activeId) updateChart(getActive());
+        }
+        renderHistory();
+        updateFab();
+      }
+      window.doImport = doImport;
+
+      function showDeleteAllConfirm() {
+        const wrap = document.getElementById('delete-all-confirm-wrap');
+        if (wrap.innerHTML) { wrap.innerHTML = ''; return; }
+        wrap.innerHTML = '<div class="confirm-inline"><span>Delete all decisions? This cannot be undone.</span><div class="cta-btns"><button class="confirm-yes" onclick="deleteAllRecords()">Delete All</button><button class="confirm-no" onclick="document.getElementById(\'delete-all-confirm-wrap\').innerHTML=\'\'">Cancel</button></div></div>';
+      }
+      window.showDeleteAllConfirm = showDeleteAllConfirm;
+
+      function deleteAllRecords() {
+        state.decisions = [];
+        state.activeId = null;
+        saveState();
+        document.getElementById('delete-all-confirm-wrap').innerHTML = '';
+        document.getElementById('modal-settings').classList.remove('open');
+        if (activeTab === 'active') {
+          renderActive();
+          updateChart(null);
+        }
+        renderHistory();
+        updateFab();
+        showToast('All decisions deleted', 'success');
+      }
+      window.deleteAllRecords = deleteAllRecords;
 
       document.getElementById('btnConfirmDelete').addEventListener('click', function () {
         if (!state.activeId) return;
