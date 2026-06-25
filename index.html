@@ -1650,7 +1650,7 @@
         container.innerHTML =
           '<div class="card">' +
           '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">' +
-          '<h2 style="font-family:var(--font-display);font-size:var(--text-xl);font-weight:700;letter-spacing:0.02em;color:var(--text-primary)">' + escHtml(decision.title) + '</h2>' +
+          '<input type="text" value="' + escHtml(decision.title) + '" data-action="update-title" maxlength="200" style="font-family:var(--font-display);font-size:var(--text-xl);font-weight:700;letter-spacing:0.02em;color:var(--text-primary);background:transparent;border:none;outline:none;padding:0;width:100%;min-width:0">' +
           '<div style="display:flex;gap:6px">' +
           '<button class="btn btn-danger btn-sm ripple-host" onclick="handleDeleteDecision()">Delete</button>' +
           '</div>' +
@@ -2189,6 +2189,20 @@
         updateChart(decision);
       }
 
+      function handleUpdateTitle(e) {
+        const decision = getActive();
+        if (!decision) return;
+        const title = e.target.value.trim();
+        if (!title) { e.target.value = decision.title; return; }
+        if (title === decision.title) return;
+        decision.title = title;
+        saveState();
+        renderActive();
+        renderHistory();
+        updateChart(decision);
+      }
+      window.handleUpdateTitle = handleUpdateTitle;
+
       document.addEventListener('click', function (e) {
         const btn = e.target.closest('[data-action]');
         if (!btn) return;
@@ -2206,8 +2220,9 @@
 
       document.addEventListener('change', function (e) {
         const input = e.target.closest('[data-action="update-score"]');
-        if (!input) return;
-        handleUpdateScore(input.dataset.type, input.dataset.fid, input.value);
+        if (input) { handleUpdateScore(input.dataset.type, input.dataset.fid, input.value); return; }
+        const titleInput = e.target.closest('[data-action="update-title"]');
+        if (titleInput) { handleUpdateTitle(e); }
       });
 
       document.addEventListener('keydown', function (e) {
@@ -2217,7 +2232,10 @@
             const type = input.dataset.type;
             const addBtn = document.querySelector('[data-action="add-factor"][data-type="' + type + '"]');
             if (addBtn) addBtn.click();
+            return;
           }
+          const titleInput = e.target.closest('[data-action="update-title"]');
+          if (titleInput) { titleInput.blur(); }
         }
       });
 
