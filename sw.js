@@ -1,10 +1,11 @@
-const CACHE_NAME = 'decisions-cache-v1.1';
+const CACHE_NAME = 'decisions-cache-v1.2';
 const ASSETS_TO_CACHE = [
   '/',
   'index.html',
   'favicon.ico',
   'icon-192x192.png',
-  'icon-512x512.png'
+  'icon-512x512.png',
+  'chart.umd.min.js'
 ];
 
 self.addEventListener('install', event => {
