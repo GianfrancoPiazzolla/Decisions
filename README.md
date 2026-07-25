@@ -2,7 +2,6 @@
 
 # 🤔 ?ecisions — Schulich Decision Method
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue?style=flat-square)
 ![PWA](https://img.shields.io/badge/PWA-ready-brightgreen?style=flat-square)
 ![License](https://img.shields.io/badge/license-MIT-orange?style=flat-square)
 ![Offline](https://img.shields.io/badge/offline-supported-success?style=flat-square)
