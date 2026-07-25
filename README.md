@@ -1,3 +1,5 @@
+<div align="center">
+
 # 🤔 ?ecisions — Schulich Decision Method
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue?style=flat-square)
@@ -6,11 +8,12 @@
 ![Offline](https://img.shields.io/badge/offline-supported-success?style=flat-square)
 ![No dependencies](https://img.shields.io/badge/backend-none-lightgrey?style=flat-square)
 
-> **⚖️ A premium, mobile-friendly web app that implements Seymour Schulich's 2:1 decision strategy from *Get Smarter: Life and Business Lessons*.**
+**⚖️ A premium, mobile-friendly web app that implements Seymour Schulich's 2:1 decision strategy from *Get Smarter: Life and Business Lessons*.**
 
-<div align="center">
 https://decisions-iota.vercel.app/
 </div>
+
+---
 
 ## ✨ Features
 
