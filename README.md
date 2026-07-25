@@ -8,7 +8,9 @@
 
 > **⚖️ A premium, mobile-friendly web app that implements Seymour Schulich's 2:1 decision strategy from *Get Smarter: Life and Business Lessons*.**
 
----
+<div align="center">
+https://decisions-iota.vercel.app/
+</div>
 
 ## ✨ Features
 
